@@ -1,0 +1,5 @@
+How to calculate ROC and AUC: 
+
+Excel: https://www.real-statistics.com/logistic-regression/receiver-operating-characteristic-roc-curve/ 
+
+YouTube: https://www.youtube.com/watch?v=EQASA00NQgM 

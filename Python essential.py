@@ -11,8 +11,11 @@ Created on Sat Aug 20 10:12:40 2022
 python: np.where
 
 # condition statement
-np.select
+#https://datatofish.com/if-condition-in-pandas-dataframe/
+
+np.select(condist, choicelist)
 df.case_when 
+
 df.shift(7) #(shift previous 7 rows, exluding index)
 
 [df1]+[df2] = [df1, df2]
