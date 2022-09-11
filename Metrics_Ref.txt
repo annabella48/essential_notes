@@ -3,3 +3,25 @@ How to calculate ROC and AUC:
 Excel: https://www.real-statistics.com/logistic-regression/receiver-operating-characteristic-roc-curve/ 
 
 YouTube: https://www.youtube.com/watch?v=EQASA00NQgM 
+
+AUC = (TPR_k - TPR_(k-1) )* FPR_k
+ROC: group probabiliy and sort, arrange y_actual based on on y_pred. Calculate 	Accumulated 1 and Accumulated 0. 
+		TPR = Accumulated 1/ total 1 Actual
+		FPR = Accumulated 0/ total 0 Actual
+#---------------------------------------------------------------------------
+Null hypothesis in machine learning: 
+https://machinelearningmastery.com/what-is-a-hypothesis-in-machine-learning/
+h0: can not use Varible X column to map y
+#---------------------------------------------------------------------------
+Anova f test: 
+https://blog.minitab.com/en/adventures-in-statistics-2/understanding-analysis-of-variance-anova-and-the-f-test
+
+F = variation between sample means / variation within the samples
+F distrubtion based 2 degree of freedoms: 
+df1 = df of number of samples ( k - 1)
+df2 = df of group ( n - k)
+tu F score => p value
+#---------------------------------------------------------------------------
+T test: 
+https://www.statisticshowto.com/probability-and-statistics/t-distribution/t-score-formula/
+T = difference between 2 means / (standard deviation /square root (n))
