@@ -25,3 +25,137 @@ tu F score => p value
 T test: 
 https://www.statisticshowto.com/probability-and-statistics/t-distribution/t-score-formula/
 T = difference between 2 means / (standard deviation /square root (n))
+#---------------------------------------------------------------------------
+
+Chi-square test
+Apply to compare 2 categorial group: 
+= Sum((O-E)^2/E ) ( use expected method: nhan cheo chia ngang)
+Similar to Fscore, Chi-square score increases --> pvalue decreases
+
+https://www.bmj.com/about-bmj/resources-readers/publications/statistics-square-one/8-chi-squared-tests 
+
+*it also has trending, binomial classes which use different methods to calculate 
+#---------------------------------------------------------------------------
+
+F_regresion (sklearn)
+
+h0: no correlation between variable X and target y
+1) calculate the cross corrleation between each regressor and the target using  Pearson correlation coefficient (r_regression)
+E[(X[:, i] - mean(X[:, i])) * (y - mean(y))] / (std(X[:, i]) * std(y))
+
+2) Converted to an F score then p-value
+
+https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.f_regression.html#sklearn.feature_selection.f_regression
+
+
+#---------------------------------------------------------------------------
+
+F-statistics in linear regression model 
+
+h0: all of the regression coefficients are equal to zero. In other words, the model has no predictive capability. Basically, the f-test compares your model with zero predictor variables (the intercept only model), and decides whether your added coefficients improved the model. 
+
+f = MSR / MSE
+= Mean sum of squares regression / Mean sum of squares error
+
+https://vitalflux.com/interpreting-f-statistics-in-linear-regression-formula-examples/
+https://www.statisticshowto.com/probability-and-statistics/f-statistic-value-test/#:~:text=The%20F%20value%20in%20regression,model%20has%20no%20predictive%20capability
+#---------------------------------------------------------------------------
+
+mutual_info_regression
+measures the dependency between the variables. It is equal to zero if and only if two random variables are independent, and higher values mean higher dependency. 
+
+
+https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.mutual_info_regression.html#sklearn.feature_selection.mutual_info_regression 
+
+#---------------------------------------------------------------------------
+Feature_selection.SelectFdr
+Run the Benjamini–Hochberg procedure
+
+	1)--Conduct all of your statistical tests and find the p-value for each test.
+
+	2)--: Arrange the p-values in order from smallest to largest, assigning a rank to each one – the smallest p-value has a rank of 1, the next smallest has a rank of 2, etc.
+
+	3)--: Calculate the Benjamini-Hochberg critical value for each p-value, using the formula (i/m)*Q
+
+	4)--**Find the largest p-value that is less than the critical value. Designate every p-value that is smaller than this p-value to be significant.**
+
+https://www.statisticshowto.com/benjamini-hochberg-procedure/ 
+https://www.statology.org/benjamini-hochberg-procedure/
+#---------------------------------------------------------------------------
+sklearn.feature_selection.SelectFpr
+
+
+Filter: Select the pvalues below alpha based on a FPR test.
+
+FPR test stands for False Positive Rate test. It controls the total amount of false detections. == p value
+
+https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectFpr.html#sklearn.feature_selection.SelectFpr
+
+
+#---------------------------------------------------------------------------
+Scale
+
+scores = -np.log10 (selector.pvalues_)#scale lon thanh nho
+scores /=scores.max()#scale lai giua 0 and 1
+
+#after univariate feature selection 
+clf_selected = make_pipeline(SelectKBest(f_classif, k=4), MinMaxScaler(), LinearSVC())
+clf_selected.fit(X_train, y_train)
+
+in make_pipeline() intermediate functions use fit_transform. the last one uses fit
+
+
+#---------------------------------------------------------------------------
+#Recursive feature elimantion : 
+
+## using RFECV and put create a suitable estimator (cross validation)
+##can return scores and using that to plot
+
+
+import matplotlib.pyplot as plt
+from sklearn.svm import SVC
+from sklearn.model_selection import StratifiedKFold
+from sklearn.feature_selection import RFECV
+from sklearn.datasets import make_classification
+
+
+X, y = make_classification(
+    n_samples=1000,
+    n_features=25,
+    n_informative=3,
+    n_redundant=2,
+    n_repeated=0,
+    n_classes=8,
+    n_clusters_per_class=1,
+    random_state=0,
+)
+
+svc= SVC (kernel = 'linear', probability = True)
+min_features_to_select = 1
+rfecv = RFECV (
+    estimator=svc,
+    step =1,
+    cv = StratifiedKFold(2),
+    scoring = 'roc_auc_ovo',
+    min_features_to_select= min_features_to_select)
+
+rfecv.fit(X,y)
+
+#Plot number of features vs. Cross-validation scores
+
+plt.figure()
+plt.xlabel ('Number of features selected')
+plt.ylabel ('Cross validation score (accuary')
+plt.plot (
+    range (min_features_to_select, 
+           len (rfecv.grid_scores_)+
+           min_features_to_select),
+    rfecv.grid_scores_,)
+plt.show()
+
+https://scikit-learn.org/stable/auto_examples/feature_selection/plot_rfe_with_cross_validation.html#sphx-glr-auto-examples-feature-selection-plot-rfe-with-cross-validation-py 
+
+dafdasJGoei29845L)
+
+
+
